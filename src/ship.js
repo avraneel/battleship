@@ -7,13 +7,18 @@ export default class Ship {
   }
 
   hit() {
-    this.hits++;
-    return this.hits;
+    if (!this.isSunk()) {
+      this.hits++;
+      return 0;
+    } else {
+      console.log("Ship is already sunk!");
+      return 1;
+    }
   }
 
   isSunk() {
-    if (this.hits === this.length) {
-      this.sunk = false;
+    if (this.hits >= this.length) {
+      this.sunk = true;
     }
     return this.sunk;
   }
