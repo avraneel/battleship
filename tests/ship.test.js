@@ -1,3 +1,4 @@
+import Gameboard from "../src/gameboard";
 import Ship from "../src/ship";
 
 test("Calling hit() increases the number of hits in a ship", () => {
