@@ -25,3 +25,7 @@ describe("Ship Placement", () => {
     expect(() => gb.placeShip(2, 1, 9, true)).toThrow();
   });
 });
+
+describe("Attacking a ship", () => {
+  test("If ship is attacked then update gameboard", () => {});
+});

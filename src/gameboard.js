@@ -1,5 +1,12 @@
 import Ship from "./ship.js";
 
+const cell = {
+  empty: 0,
+  ship: 1,
+  miss: 2,
+  shot: 3,
+};
+
 export default class Gameboard {
   constructor() {
     this.resetBoard();
@@ -10,24 +17,33 @@ export default class Gameboard {
   resetBoard() {
     this.board = Array(10);
     for (let i = 0; i < this.board.length; i++) {
-      this.board[i] = Array(10).fill(0);
+      this.board[i] = Array(10).fill(cell.empty);
     }
   }
 
   placeShip(x, y, length, vertical) {
     const ship = new Ship(length);
-    this.board[x][y] = 1;
+    this.board[x][y] = cell.ship;
     if ((vertical && y + length >= 10) || (!vertical && x + length >= 10)) {
       throw new Error("Ship length is out of bounds");
     }
     if (vertical) {
       for (let i = 1; i < length; i++) {
-        this.board[++x][y] = 1;
+        this.board[++x][y] = cell.ship;
       }
     } else {
       for (let i = 1; i < length; i++) {
-        this.board[x][y] = 1;
+        this.board[x][y] = cell.ship;
       }
+    }
+  }
+
+  receiveAttack(x, y) {
+    if (this.board[x][y] == cell.ship) {
+      // ship is hit
+      this.board[x][y] = cell.shot;
+    } else {
+      this.board[x][y] = cell.miss;
     }
   }
 }
