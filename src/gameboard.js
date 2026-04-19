@@ -3,8 +3,8 @@ import Ship from "./ship.js";
 const cell = {
   empty: 0,
   ship: 1,
-  miss: 2,
-  shot: 3,
+  shot: 2,
+  miss: 3,
 };
 
 export default class Gameboard {
@@ -21,19 +21,19 @@ export default class Gameboard {
     }
   }
 
-  placeShip(x, y, length, vertical) {
+  placeShip(row, col, length, vertical) {
     const ship = new Ship(length);
-    this.board[x][y] = cell.ship;
-    if ((vertical && y + length >= 10) || (!vertical && x + length >= 10)) {
+    this.board[row][col] = cell.ship;
+    if ((vertical && row + length >= 10) || (!vertical && col + length >= 10)) {
       throw new Error("Ship length is out of bounds");
     }
     if (vertical) {
       for (let i = 1; i < length; i++) {
-        this.board[++x][y] = cell.ship;
+        this.board[++row][col] = cell.ship;
       }
     } else {
       for (let i = 1; i < length; i++) {
-        this.board[x][y] = cell.ship;
+        this.board[row][++col] = cell.ship;
       }
     }
   }
@@ -47,6 +47,3 @@ export default class Gameboard {
     }
   }
 }
-
-const gb = new Gameboard();
-gb.placeShip(2, 1, 9, true);

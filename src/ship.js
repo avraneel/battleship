@@ -1,5 +1,5 @@
 export default class Ship {
-  constructor(startx, starty, length) {
+  constructor(length) {
     if (length <= 0) throw new Error("Length must be positive");
     this.length = length;
     this.sunk = false;
@@ -11,8 +11,7 @@ export default class Ship {
       this.hits++;
       return 0;
     } else {
-      console.log("Ship is already sunk!");
-      return 1;
+      throw new Error("Ship is already sunk!");
     }
   }
 

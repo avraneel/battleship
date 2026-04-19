@@ -35,5 +35,7 @@ test("Ship cannot be hit if it is sunk", () => {
   const ship1 = new Ship(2);
   ship1.hit();
   ship1.hit();
-  expect(ship1.hit()).toBe(1);
+  expect(() => {
+    ship1.hit();
+  }).toThrow();
 });

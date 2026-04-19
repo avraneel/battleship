@@ -27,5 +27,10 @@ describe("Ship Placement", () => {
 });
 
 describe("Attacking a ship", () => {
-  test("If ship is attacked then update gameboard", () => {});
+  test("If ship is attacked then update gameboard", () => {
+    const gb = new Gameboard();
+    gb.placeShip(3, 5, 3, false);
+    gb.receiveAttack(3, 6);
+    expect(gb.board[3]).toStrictEqual([0, 0, 0, 0, 0, 1, 2, 1, 0, 0]);
+  });
 });
