@@ -10,6 +10,7 @@ const cell = {
 export default class Gameboard {
   constructor() {
     this.resetBoard();
+    this.ships = [];
     this.misses = 0;
     this.allSunk = false;
   }
@@ -23,6 +24,7 @@ export default class Gameboard {
 
   placeShip(row, col, length, vertical) {
     const ship = new Ship(length);
+    const item = { obj: ship, coords: [[row, col]] };
     this.board[row][col] = cell.ship;
     if ((vertical && row + length >= 10) || (!vertical && col + length >= 10)) {
       throw new Error("Ship length is out of bounds");
@@ -30,20 +32,24 @@ export default class Gameboard {
     if (vertical) {
       for (let i = 1; i < length; i++) {
         this.board[++row][col] = cell.ship;
+        item.coords.push([row, col]);
       }
     } else {
       for (let i = 1; i < length; i++) {
         this.board[row][++col] = cell.ship;
+        item.coords.push([row, col]);
       }
     }
+    this.ships.push(item);
   }
 
-  receiveAttack(x, y) {
-    if (this.board[x][y] == cell.ship) {
+  receiveAttack(row, col) {
+    if (this.board[row][col] == cell.ship) {
       // ship is hit
-      this.board[x][y] = cell.shot;
+      this.board[row][col] = cell.shot;
+      //this.ships[row.toString() + col.toString()].hit();
     } else {
-      this.board[x][y] = cell.miss;
+      this.board[row][col] = cell.miss;
     }
   }
 }

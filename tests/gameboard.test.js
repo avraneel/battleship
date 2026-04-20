@@ -1,3 +1,4 @@
+import { experiments } from "webpack";
 import Gameboard from "../src/gameboard";
 
 describe("Ship Placement", () => {
@@ -32,5 +33,12 @@ describe("Attacking a ship", () => {
     gb.placeShip(3, 5, 3, false);
     gb.receiveAttack(3, 6);
     expect(gb.board[3]).toStrictEqual([0, 0, 0, 0, 0, 1, 2, 1, 0, 0]);
+  });
+
+  test("If ship is attacked then update the ship's hit count", () => {
+    const gb = new Gameboard();
+    gb.placeShip(3, 5, 3, false);
+    gb.receiveAttack(3, 6);
+    expect(gb.ships["35"].hits).toBe(1);
   });
 });
