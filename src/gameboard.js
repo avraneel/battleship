@@ -47,9 +47,12 @@ export default class Gameboard {
     if (this.board[row][col] == cell.ship) {
       // ship is hit
       this.board[row][col] = cell.shot;
-      //this.ships[row.toString() + col.toString()].hit();
+      //this.ships[].hit();
     } else {
       this.board[row][col] = cell.miss;
     }
   }
 }
+
+const gb = new Gameboard();
+gb.placeShip(3, 5, 3, true);

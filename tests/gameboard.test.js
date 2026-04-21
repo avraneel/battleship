@@ -1,5 +1,5 @@
-import { experiments } from "webpack";
-import Gameboard from "../src/gameboard";
+import Gameboard from "../src/gameboard.js";
+import Ship from "../src/ship.js";
 
 describe("Ship Placement", () => {
   test("Placing a horizontal ship with length in bounds", () => {
@@ -25,6 +25,17 @@ describe("Ship Placement", () => {
     const gb = new Gameboard();
     expect(() => gb.placeShip(2, 1, 9, true)).toThrow();
   });
+
+  test("If ship is placed then the ship object should be traced in the board", () => {
+    const gb = new Gameboard();
+    gb.placeShip(3, 5, 3, true);
+    expect(gb.ships[0].obj).toStrictEqual(new Ship(3));
+    expect(gb.ships[0].coords).toStrictEqual([
+      [3, 5],
+      [4, 5],
+      [5, 5],
+    ]);
+  });
 });
 
 describe("Attacking a ship", () => {
@@ -39,6 +50,6 @@ describe("Attacking a ship", () => {
     const gb = new Gameboard();
     gb.placeShip(3, 5, 3, false);
     gb.receiveAttack(3, 6);
-    expect(gb.ships["35"].hits).toBe(1);
+    expect(gb.ships[0].obj.hits).toBe(1);
   });
 });
