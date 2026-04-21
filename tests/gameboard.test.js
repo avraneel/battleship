@@ -1,9 +1,14 @@
 import Gameboard from "../src/gameboard.js";
 import Ship from "../src/ship.js";
 
+beforeAll(() => {
+  const gb = new Gameboard();
+  return gb;
+});
+
 describe("Ship Placement", () => {
   test("Placing a horizontal ship with length in bounds", () => {
-    const gb = new Gameboard();
+    //const gb = new Gameboard();
     gb.placeShip(3, 5, 3, false);
     expect(gb.board[3]).toStrictEqual([0, 0, 0, 0, 0, 1, 1, 1, 0, 0]);
   });

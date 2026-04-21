@@ -7,6 +7,16 @@ const cell = {
   miss: 3,
 };
 
+function findShip(ships, x, y) {
+  for (let i = 0; i < ships.length; i++) {
+    let arr = ships[i].coords;
+    if (arr.includes([x, y])) {
+      return ships[i];
+    }
+  }
+  return undefined;
+}
+
 export default class Gameboard {
   constructor() {
     this.resetBoard();
