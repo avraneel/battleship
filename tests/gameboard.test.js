@@ -1,7 +1,5 @@
-import { isWebTarget } from "webpack-dev-server";
 import Gameboard from "../src/gameboard.js";
 import Ship from "../src/ship.js";
-import { experiments } from "webpack";
 
 describe("Gameboard", () => {
   const gb = new Gameboard();
