@@ -7,14 +7,14 @@ const cell = {
   miss: 3,
 };
 
-function findShip(ships, x, y) {
+function findShip(ships, row, col) {
   for (let i = 0; i < ships.length; i++) {
     let arr = ships[i].coords;
     if (arr.includes([x, y])) {
       return ships[i];
     }
   }
-  return undefined;
+  throw new Error("Ship not found!");
 }
 
 export default class Gameboard {
@@ -51,6 +51,16 @@ export default class Gameboard {
       }
     }
     this.ships.push(item);
+  }
+
+  findShip(row, col) {
+    for (let i = 0; i < this.ships.length; i++) {
+      let arr = this.ships[i].coords;
+      if (arr.includes([row, col])) {
+        return this.ships[i];
+      }
+    }
+    throw new Error("Ship not found!");
   }
 
   receiveAttack(row, col) {
