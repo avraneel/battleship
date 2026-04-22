@@ -56,8 +56,8 @@ export default class Gameboard {
   findShip(row, col) {
     for (let i = 0; i < this.ships.length; i++) {
       let arr = this.ships[i].coords;
-      if (arr.includes([row, col])) {
-        return this.ships[i];
+      if (arr.some((item) => item[0] === row && item[1] === col)) {
+        return this.ships[i].obj;
       }
     }
     throw new Error("Ship not found!");
@@ -67,10 +67,26 @@ export default class Gameboard {
     if (this.board[row][col] == cell.ship) {
       // ship is hit
       this.board[row][col] = cell.shot;
-      //this.ships[].hit();
+      try {
+        const ship = this.findShip(row, col);
+        ship.hit();
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       this.board[row][col] = cell.miss;
     }
+  }
+
+  isAllSunk() {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (this.board[i][j] == cell.ship) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
 

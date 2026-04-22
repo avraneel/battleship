@@ -1,5 +1,7 @@
+import { isWebTarget } from "webpack-dev-server";
 import Gameboard from "../src/gameboard.js";
 import Ship from "../src/ship.js";
+import { experiments } from "webpack";
 
 describe("Gameboard", () => {
   const gb = new Gameboard();
@@ -41,11 +43,12 @@ describe("Gameboard", () => {
     });
 
     test("Return ship if ship is found", () => {
-      expect(gb.findShip(3, 6)).toStrictEqual({
+      expect(gb.findShip(3, 6)).toEqual({
         length: 3,
         hits: 0,
         sunk: false,
       });
+      expect(gb.findShip(3, 6)).toBeInstanceOf(Ship);
     });
   });
 
@@ -55,11 +58,28 @@ describe("Gameboard", () => {
       expect(gb.board[3]).toStrictEqual([0, 1, 0, 0, 0, 1, 2, 1, 0, 0]);
     });
 
-    // test("If ship is attacked then update the ship's hit count", () => {
-    //   const gb = new Gameboard();
-    //   gb.placeShip(3, 5, 3, false);
-    //   gb.receiveAttack(3, 6);
-    //   expect(gb.ships[0].obj.hits).toBe(1);
-    // });
+    test("If ship is attacked then update the ship's hit count", () => {
+      gb.receiveAttack(3, 7);
+      expect(gb.findShip(3, 5).hits).toBe(2);
+    });
+  });
+
+  describe("If all is sunk", () => {
+    test("return false if all is not sunk", () => {
+      expect(gb.isAllSunk()).toBe(false);
+    });
+    test("return true if all is sunk", () => {
+      gb.receiveAttack(3, 5);
+      gb.receiveAttack(2, 1);
+      gb.receiveAttack(3, 1);
+      gb.receiveAttack(4, 1);
+      gb.receiveAttack(5, 1);
+      gb.receiveAttack(6, 1);
+      gb.receiveAttack(7, 1);
+      gb.receiveAttack(0, 8);
+      gb.receiveAttack(1, 8);
+      gb.receiveAttack(2, 8);
+      expect(gb.isAllSunk()).toBe(true);
+    });
   });
 });
