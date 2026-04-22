@@ -4,6 +4,9 @@
   "description": "Install dependencies",
   "main": "webpack.config.js",
   "scripts": {
+    "build": "webpack",
+    "dev": "webpack serve",
+    "deploy": "git subtree push --prefix dist origin gh-pages",
     "test": "jest"
   },
   "repository": {
@@ -12,7 +15,6 @@
   },
   "keywords": [],
   "author": "",
-  "type": "module",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/avraneel/battleship/issues"
