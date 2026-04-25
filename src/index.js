@@ -6,7 +6,7 @@ import Gameboard from "./gameboard.js";
 
 const content = document.querySelector(".content");
 
-const playerBoard = new Gameboard();
+export const playerBoard = new Gameboard();
 const computerBoard = new Gameboard();
 
 playerBoard.placeShip(0, 7, 3, false);

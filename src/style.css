@@ -20,3 +20,8 @@ table {
   text-align: center;
   border: 1px solid #000;
 }
+
+.cell:hover {
+  border: 2px solid #016c18;
+  background-color: #72e48a;
+}
