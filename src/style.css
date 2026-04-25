@@ -7,3 +7,16 @@
 *:not(dialog) {
   margin: 0;
 }
+
+table {
+  border: 1px solid #000;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #000;
+}
+
+td:nth-child(3) {
+  background-color: #000;
+}
