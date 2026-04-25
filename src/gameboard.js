@@ -25,18 +25,29 @@ export default class Gameboard {
   placeShip(row, col, length, vertical) {
     const ship = new Ship(length);
     const item = { obj: ship, coords: [[row, col]] };
+    if (this.board[row][col] !== cell.empty) {
+      throw new Error("Starting position is not empty");
+    }
     this.board[row][col] = cell.ship;
-    if ((vertical && row + length >= 10) || (!vertical && col + length >= 10)) {
+    if ((vertical && row + length > 10) || (!vertical && col + length > 10)) {
       throw new Error("Ship length is out of bounds");
     }
     if (vertical) {
       for (let i = 1; i < length; i++) {
-        this.board[++row][col] = cell.ship;
+        row++;
+        if (this.board[row][col] !== cell.empty) {
+          throw new Error("Overlapping with another ship");
+        }
+        this.board[row][col] = cell.ship;
         item.coords.push([row, col]);
       }
     } else {
       for (let i = 1; i < length; i++) {
-        this.board[row][++col] = cell.ship;
+        col++;
+        if (this.board[row][col] !== cell.empty) {
+          throw new Error("Overlapping with another ship");
+        }
+        this.board[row][col] = cell.ship;
         item.coords.push([row, col]);
       }
     }

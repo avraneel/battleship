@@ -16,6 +16,14 @@ describe("Gameboard", () => {
       ]);
     });
 
+    test("place a ship whose starting position is occupied", () => {
+      expect(() => gb.placeShip(3, 5, 2, true)).toThrow();
+    });
+
+    test("place a ship whose non-starting position is occupied", () => {
+      expect(() => gb.placeShip(3, 6, 2, true)).toThrow();
+    });
+
     test("Placing a horizontal ship with length out of bounds", () => {
       expect(() => gb.placeShip(3, 5, 7, false)).toThrow();
     });

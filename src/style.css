@@ -9,14 +9,14 @@
 }
 
 table {
-  border: 1px solid #000;
+  border-collapse: collapse;
 }
 
-td {
-  padding: 10px;
+.cell {
+  height: 2em;
+  width: 2em;
+  margin: 0;
+  padding: 0;
+  text-align: center;
   border: 1px solid #000;
-}
-
-td:nth-child(3) {
-  background-color: #000;
 }
