@@ -67,20 +67,3 @@ function updateBoard(gb, cell) {
   // add new board
   content.appendChild(newBoard);
 }
-
-function setCell(cell) {
-  const type = cell.classList[2];
-  switch (type) {
-    case 1:
-      cell.textContent = "S";
-      break;
-    case 2:
-      cell.textContent = "O";
-      break;
-    case 3:
-      cell.textContent = "X";
-      break;
-    default:
-      break;
-  }
-}

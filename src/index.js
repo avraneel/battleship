@@ -20,9 +20,59 @@ playerBoard.placeShip(7, 7, 1, false);
 playerBoard.placeShip(9, 3, 1, false);
 playerBoard.placeShip(9, 7, 2, false);
 
-const h1 = document.createElement("h1");
-h1.textContent = "Battleship";
+// const header = document.createElement("header");
 
-const board = renderBoard(playerBoard);
+// const gameArea = document.createElement("div");
+// gameArea.classList.add("game-area");
+// const playerArea = document.createElement("div");
+// playerArea.classList.add("player-area");
+// const computerArea = document.createElement("div");
+// computerArea.classList.add("computer-area");
 
-content.append(h1, board);
+// const h1 = document.createElement("h1");
+// h1.textContent = "Battleship";
+
+// header.append(h1);
+// gameArea.append(playerArea, computerArea);
+// playerArea.append(playerBoard);
+
+// const board = renderBoard(playerBoard);
+
+// content.append(header, gameArea);
+
+function createPage() {
+  const content = document.querySelector(".content");
+
+  // Create Elements
+  const header = document.createElement("header");
+  const h1 = document.createElement("h1");
+  h1.textContent = "Battleship";
+
+  header.append(h1);
+
+  // Elements in main game area
+  const gameArea = document.createElement("div");
+  gameArea.classList.add("game-area");
+  const playerArea = document.createElement("div");
+  playerArea.classList.add("player-area");
+  const h2Player = document.createElement("h2");
+  h2Player.textContent = "Player";
+  const playerBoardPlaceholder = document.createElement("div");
+  playerBoardPlaceholder.classList.add("player-board-placeholder");
+  const computerArea = document.createElement("div");
+  computerArea.classList.add("computer-area");
+  const h2Computer = document.createElement("h2");
+  h2Computer.textContent = "Computer";
+  const computerBoardPlaceholder = document.createElement("div");
+  computerBoardPlaceholder.classList.add("computer-board-placeholder");
+
+  playerArea.appendChild(h2Player, playerBoardPlaceholder);
+  computerArea.appendChild(h2Computer, computerBoardPlaceholder);
+
+  gameArea.append(playerArea, computerArea);
+  header.append(h1);
+
+  content.append(header, gameArea);
+}
+
+createPage();
