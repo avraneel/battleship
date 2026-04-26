@@ -1,4 +1,4 @@
-export function renderBoard(gb, computer) {
+export function renderBoard(gb, computer, playerTurn) {
   const board = document.createElement("table");
   if (computer) {
     board.classList.add("board", "computer-board");
@@ -16,7 +16,7 @@ export function renderBoard(gb, computer) {
    * handler is also not defined outside renderBoard because we need to use the gb parameter
    */
   const handler = function () {
-    updateBoard(gb, this);
+    updateBoard(gb, this, playerTurn);
   };
 
   for (let i = 0; i < 10; i++) {
@@ -55,6 +55,9 @@ export function renderBoard(gb, computer) {
       row.appendChild(cell);
     }
     board.appendChild(row);
+    if (playerTurn && !computer) {
+      board.classList.add("lock");
+    }
   }
 
   if (computer) {
@@ -71,7 +74,7 @@ export function renderBoard(gb, computer) {
   return board;
 }
 
-function updateBoard(gb, cell) {
+function updateBoard(gb, cell, playerTurn) {
   const row = cell.parentElement.classList[0].at(-1);
   const col = cell.classList[1].at(-1);
 
@@ -79,26 +82,28 @@ function updateBoard(gb, cell) {
   const computer = whichBoard === "computer-board" ? true : false;
   gb.receiveAttack(row, col);
 
-  if (computer) {
+  if (playerTurn) {
+    playerTurn = false;
     // If click on computer's board, render new computer's board
     // and also lock computer's board and unlock player board
     const boardPlaceholder = document.querySelector(
       ".player-board-placeholder",
     );
     boardPlaceholder.removeChild(document.querySelector(".computer-board"));
-    renderBoard(gb, computer);
+    renderBoard(gb, computer, playerTurn);
     const computerBoard = document.querySelector(".computer-board");
     const playerBoard = document.querySelector(".player-board");
     computerBoard.classList.add("lock");
     playerBoard.classList.remove("lock");
   } else {
+    playerTurn = true;
     // If click on player's board, render new player's board
     // and also lock player's board and unlock computer's board
     const boardPlaceholder = document.querySelector(
       ".computer-board-placeholder",
     );
     boardPlaceholder.removeChild(document.querySelector(".player-board"));
-    renderBoard(gb, computer);
+    renderBoard(gb, computer, playerTurn);
     const computerBoard = document.querySelector(".computer-board");
     const playerBoard = document.querySelector(".player-board");
     playerBoard.classList.add("lock");

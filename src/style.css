@@ -14,7 +14,14 @@
 }
 
 .game-area {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.player-area,
+.computer-area {
+  place-items: center;
 }
 
 table {
@@ -44,6 +51,6 @@ table {
 }
 
 .lock {
-  background-color: #5e5e5ead;
+  filter: blur(2px);
   pointer-events: none;
 }

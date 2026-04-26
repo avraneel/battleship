@@ -30,26 +30,6 @@ computerBoard.placeShip(5, 8, 2, true);
 computerBoard.placeShip(6, 6, 4, true);
 computerBoard.placeShip(8, 9, 1, true);
 
-// const header = document.createElement("header");
-
-// const gameArea = document.createElement("div");
-// gameArea.classList.add("game-area");
-// const playerArea = document.createElement("div");
-// playerArea.classList.add("player-area");
-// const computerArea = document.createElement("div");
-// computerArea.classList.add("computer-area");
-
-// const h1 = document.createElement("h1");
-// h1.textContent = "Battleship";
-
-// header.append(h1);
-// gameArea.append(playerArea, computerArea);
-// playerArea.append(playerBoard);
-
-// const board = renderBoard(playerBoard);
-
-// content.append(header, gameArea);
-
 function createPage() {
   const content = document.querySelector(".content");
 
@@ -86,8 +66,10 @@ function createPage() {
 }
 
 createPage();
-renderBoard(playerBoard, true);
-renderBoard(computerBoard, false);
+let playerTurn = true;
+
+renderBoard(playerBoard, true, true);
+renderBoard(computerBoard, false, true);
 
 const x = document.querySelector(".board");
 //x.classList.add("non");

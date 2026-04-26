@@ -9,6 +9,7 @@ const cell = {
 
 export default class Gameboard {
   constructor() {
+    this.board = Array(10);
     this.resetBoard();
     this.ships = [];
     this.misses = 0;
@@ -16,7 +17,6 @@ export default class Gameboard {
   }
 
   resetBoard() {
-    this.board = Array(10);
     for (let i = 0; i < this.board.length; i++) {
       this.board[i] = Array(10).fill(cell.empty);
     }
@@ -80,16 +80,11 @@ export default class Gameboard {
   }
 
   isAllSunk() {
-    for (let i = 0; i < 10; i++) {
-      for (let j = 0; j < 10; j++) {
-        if (this.board[i][j] == cell.ship) {
-          return false;
-        }
+    for (let i = 0; i < this.ships.length; i++) {
+      if (!this.ships[i].obj.isSunk()) {
+        return false;
       }
     }
     return true;
   }
 }
-
-const gb = new Gameboard();
-gb.placeShip(3, 5, 3, true);
