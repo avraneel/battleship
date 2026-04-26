@@ -8,4 +8,4 @@ function playGame() {
   const computer = new Computer();
 }
 
-function win() {}
+function gameOver() {}
