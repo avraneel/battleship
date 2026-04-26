@@ -1,6 +1,10 @@
-export function renderBoard(gb) {
+export function renderBoard(gb, computer) {
   const board = document.createElement("table");
-  board.classList.add("board");
+  if (computer) {
+    board.classList.add("board", "computer-board");
+  } else {
+    board.classList.add("board", "player-board");
+  }
 
   /**
    * handler is needed because we need to use a named function if we want
@@ -23,12 +27,14 @@ export function renderBoard(gb) {
       const cell = document.createElement("td");
       cell.classList.add("cell", `col${j}`, "empty");
 
-      cell.addEventListener("click", handler);
+      cell.addEventListener("click", handler, computer);
 
       // set cell value here
       switch (gb.board[i][j]) {
         case 1:
-          cell.textContent = "S";
+          if (!computer) {
+            cell.textContent = "S";
+          }
           break;
         case 2:
           cell.textContent = "O";
@@ -50,19 +56,39 @@ export function renderBoard(gb) {
     }
     board.appendChild(row);
   }
-  const boardPlaceholder = document.querySelector(".player-board-placeholder");
-  boardPlaceholder.appendChild(board);
+
+  if (computer) {
+    const boardPlaceholder = document.querySelector(
+      ".player-board-placeholder",
+    );
+    boardPlaceholder.appendChild(board);
+  } else {
+    const boardPlaceholder = document.querySelector(
+      ".computer-board-placeholder",
+    );
+    boardPlaceholder.appendChild(board);
+  }
 }
 
 function updateBoard(gb, cell) {
   const row = cell.parentElement.classList[0].at(-1);
   const col = cell.classList[1].at(-1);
 
+  const whichBoard = cell.parentElement.parentElement.classList[1];
+  const computer = whichBoard === "computer-board" ? true : false;
   gb.receiveAttack(row, col);
 
-  const boardPlaceholder = document.querySelector(".player-board-placeholder");
-  // remove old board
-  boardPlaceholder.removeChild(document.querySelector(".board"));
+  if (computer) {
+    const boardPlaceholder = document.querySelector(
+      ".player-board-placeholder",
+    );
+    boardPlaceholder.removeChild(document.querySelector(".computer-board"));
+  } else {
+    const boardPlaceholder = document.querySelector(
+      ".computer-board-placeholder",
+    );
+    boardPlaceholder.removeChild(document.querySelector(".player-board"));
+  }
   // add new board
-  renderBoard(gb);
+  renderBoard(gb, computer);
 }

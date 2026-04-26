@@ -20,6 +20,9 @@ playerBoard.placeShip(7, 7, 1, false);
 playerBoard.placeShip(9, 3, 1, false);
 playerBoard.placeShip(9, 7, 2, false);
 
+computerBoard.placeShip(0, 7, 2, false);
+computerBoard.placeShip(0, 5, 2, true);
+
 // const header = document.createElement("header");
 
 // const gameArea = document.createElement("div");
@@ -76,7 +79,8 @@ function createPage() {
 }
 
 createPage();
-renderBoard(playerBoard);
+renderBoard(playerBoard, true);
+renderBoard(computerBoard, false);
 
 const x = document.querySelector(".board");
 //x.classList.add("non");
