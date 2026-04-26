@@ -27,7 +27,7 @@ export function renderBoard(gb, computer) {
       const cell = document.createElement("td");
       cell.classList.add("cell", `col${j}`, "empty");
 
-      cell.addEventListener("click", handler, computer);
+      cell.addEventListener("click", handler);
 
       // set cell value here
       switch (gb.board[i][j]) {

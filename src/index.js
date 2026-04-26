@@ -72,7 +72,7 @@ function createPage() {
   playerArea.append(h2Player, playerBoardPlaceholder);
   computerArea.append(h2Computer, computerBoardPlaceholder);
 
-  gameArea.append(playerArea, computerArea);
+  gameArea.append(computerArea, playerArea);
   header.append(h1);
 
   content.append(header, gameArea);
