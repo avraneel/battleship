@@ -7,7 +7,7 @@ export function renderBoard(gb) {
    * to remove the event listener to prevent "O" to become "X".
    * No need to worry about the `this` in definition, as the value of this in JavaScript
    * depends on how a function is invoked, not how it is defined. So, on runtime,
-   * this will be the calling element (i.e) cell.
+   * this will be the calling element (i.eg) cell.
    *
    * handler is also not defined outside renderBoard because we need to use the gb parameter
    */
@@ -50,7 +50,8 @@ export function renderBoard(gb) {
     }
     board.appendChild(row);
   }
-  return board;
+  const boardPlaceholder = document.querySelector(".player-board-placeholder");
+  boardPlaceholder.appendChild(board);
 }
 
 function updateBoard(gb, cell) {
@@ -59,11 +60,9 @@ function updateBoard(gb, cell) {
 
   gb.receiveAttack(row, col);
 
-  const newBoard = renderBoard(gb);
-
-  const content = document.querySelector(".content");
+  const boardPlaceholder = document.querySelector(".player-board-placeholder");
   // remove old board
-  content.removeChild(document.querySelector(".board"));
+  boardPlaceholder.removeChild(document.querySelector(".board"));
   // add new board
-  content.appendChild(newBoard);
+  renderBoard(gb);
 }

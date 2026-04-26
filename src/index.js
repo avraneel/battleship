@@ -66,8 +66,8 @@ function createPage() {
   const computerBoardPlaceholder = document.createElement("div");
   computerBoardPlaceholder.classList.add("computer-board-placeholder");
 
-  playerArea.appendChild(h2Player, playerBoardPlaceholder);
-  computerArea.appendChild(h2Computer, computerBoardPlaceholder);
+  playerArea.append(h2Player, playerBoardPlaceholder);
+  computerArea.append(h2Computer, computerBoardPlaceholder);
 
   gameArea.append(playerArea, computerArea);
   header.append(h1);
@@ -76,3 +76,7 @@ function createPage() {
 }
 
 createPage();
+renderBoard(playerBoard);
+
+const x = document.querySelector(".board");
+//x.classList.add("non");

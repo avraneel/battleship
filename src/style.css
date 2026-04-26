@@ -10,6 +10,7 @@
 
 .content {
   display: grid;
+  grid-template-rows:;
 }
 
 .game-area {
@@ -26,10 +27,23 @@ table {
   margin: 0;
   padding: 0;
   text-align: center;
-  border: 1px solid #000;
+  border: 1px solid #9d98fc;
 }
 
 .cell:hover {
-  border: 2px solid #016c18;
+  border: 1px solid #016c18;
   background-color: #72e48a;
+}
+
+.miss {
+  background-color: #68686830;
+}
+
+.hit {
+  background-color: #f8ff97b3;
+}
+
+.non {
+  background-color: #5e5e5ead;
+  pointer-events: none;
 }

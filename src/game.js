@@ -15,3 +15,11 @@ playerBoard.placeShip(7, 2, 4, false);
 playerBoard.placeShip(7, 7, 1, false);
 playerBoard.placeShip(9, 3, 1, false);
 playerBoard.placeShip(9, 7, 2, false);
+
+computerBoard.placeShip(0, 7, 2, false);
+computerBoard.placeShip(0, 5, 2, true);
+
+function playGame() {
+  if (playerTurn) {
+  }
+}
