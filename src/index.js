@@ -22,6 +22,13 @@ playerBoard.placeShip(9, 7, 2, false);
 
 computerBoard.placeShip(0, 7, 2, false);
 computerBoard.placeShip(0, 5, 2, true);
+computerBoard.placeShip(1, 0, 1, true);
+computerBoard.placeShip(3, 6, 1, true);
+computerBoard.placeShip(4, 1, 3, true);
+computerBoard.placeShip(4, 3, 3, true);
+computerBoard.placeShip(5, 8, 2, true);
+computerBoard.placeShip(6, 6, 4, true);
+computerBoard.placeShip(8, 9, 1, true);
 
 // const header = document.createElement("header");
 
