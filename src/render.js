@@ -68,6 +68,7 @@ export function renderBoard(gb, computer) {
     );
     boardPlaceholder.appendChild(board);
   }
+  return board;
 }
 
 function updateBoard(gb, cell) {
@@ -79,16 +80,28 @@ function updateBoard(gb, cell) {
   gb.receiveAttack(row, col);
 
   if (computer) {
+    // If click on computer's board, render new computer's board
+    // and also lock computer's board and unlock player board
     const boardPlaceholder = document.querySelector(
       ".player-board-placeholder",
     );
     boardPlaceholder.removeChild(document.querySelector(".computer-board"));
+    renderBoard(gb, computer);
+    const computerBoard = document.querySelector(".computer-board");
+    const playerBoard = document.querySelector(".player-board");
+    computerBoard.classList.add("lock");
+    playerBoard.classList.remove("lock");
   } else {
+    // If click on player's board, render new player's board
+    // and also lock player's board and unlock computer's board
     const boardPlaceholder = document.querySelector(
       ".computer-board-placeholder",
     );
     boardPlaceholder.removeChild(document.querySelector(".player-board"));
+    renderBoard(gb, computer);
+    const computerBoard = document.querySelector(".computer-board");
+    const playerBoard = document.querySelector(".player-board");
+    playerBoard.classList.add("lock");
+    computerBoard.classList.remove("lock");
   }
-  // add new board
-  renderBoard(gb, computer);
 }
