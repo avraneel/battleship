@@ -34,23 +34,41 @@ function playComputerChoice() {
     row = Math.floor(Math.random() * 10);
     col = Math.floor(Math.random() * 10);
   }
-  player.gb.receiveAttack(row, col);
+  return player.gb.receiveAttack(row, col);
 }
 
 function playRound(row, col) {
-  computer.gb.receiveAttack(row, col);
+  const isPlayerHit = computer.gb.receiveAttack(row, col);
   renderComputerBoard(computer.gb);
   if (computer.gb.isAllSunk()) {
     // player wins
     alert("Player wins!");
     return 1;
   }
-  playComputerChoice();
-  renderPlayerBoard(player.gb);
-  if (player.gb.isAllSunk()) {
-    alert("Computer wins!");
-    return 2;
-    // computer wins
+  // only if player misses, does the computer get allowed to play
+  // if player hits, get out of function and wait for next input from player
+  if (isPlayerHit === false) {
+    // set timeout to simulate computer is thinking
+    setTimeout(() => {
+      let isComputerHit = playComputerChoice();
+      renderPlayerBoard(player.gb);
+      if (player.gb.isAllSunk()) {
+        alert("Computer wins!");
+        return 2;
+        // computer wins
+      }
+      setTimeout(() => {
+        while (isComputerHit) {
+          isComputerHit = playComputerChoice();
+          renderPlayerBoard(player.gb);
+          if (player.gb.isAllSunk()) {
+            alert("Computer wins!");
+            return 2;
+            // computer wins
+          }
+        }
+      }, 300);
+    }, 300);
   }
   return 0;
 }
@@ -73,6 +91,7 @@ function renderPlayerBoard(gb) {
         cell.classList.add("ship");
       } else if (gb.board[i][j] === 2) {
         // cell with ship is hit
+        cell.textContent = "H";
         cell.classList.add("hit");
       } else {
         // cell with ship is missed
@@ -92,6 +111,13 @@ function renderPlayerBoard(gb) {
 function renderComputerBoard(gb) {
   const board = document.createElement("table");
   board.classList.add("computer-board");
+
+  const handler = function (e) {
+    const row = parseInt(this.parentElement.classList[0].at(-1));
+    const col = parseInt(this.classList[1].at(-1));
+    const roundVal = playRound(row, col);
+    if (roundVal) lockBoards();
+  };
   for (let i = 0; i < 10; i++) {
     const row = document.createElement("tr");
     row.classList.add(`row${i}`);
@@ -103,17 +129,13 @@ function renderComputerBoard(gb) {
         cell.classList.add("empty");
       } else if (gb.board[i][j] === 2) {
         // cell with ship is hit
+        cell.textContent = "H";
         cell.classList.add("hit");
       } else {
         // cell with ship is missed
         cell.classList.add("miss");
       }
-      cell.addEventListener("click", function (e) {
-        const row = this.parentElement.classList[0].at(-1);
-        const col = this.classList[1].at(-1);
-        const roundVal = playRound(row, col);
-        if (roundVal) lockBoards();
-      });
+      cell.addEventListener("click", handler);
       row.appendChild(cell);
     }
     board.appendChild(row);

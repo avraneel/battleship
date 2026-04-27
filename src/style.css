@@ -8,7 +8,23 @@
   margin: 0;
 }
 
+@font-face {
+  font-family: "Fira Code";
+  src:
+    url("./assets/fonts/FiraCode-Light.woff2") format("woff2"),
+    url("./assets/fonts/FiraCode-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "Fira Code";
+  padding: 2em;
+}
+
 .content {
+  margin: 2em;
   display: grid;
 }
 
@@ -20,6 +36,8 @@
 
 .player-area,
 .computer-area {
+  display: grid;
+  gap: 2rem;
   place-items: center;
 }
 
@@ -33,7 +51,7 @@ table {
   margin: 0;
   padding: 0;
   text-align: center;
-  border: 1px solid #9d98fc;
+  border: 1px solid #5f4842;
 }
 
 .computer-board .cell:hover {
@@ -42,11 +60,7 @@ table {
 }
 
 .miss {
-  background-color: #68686830;
-}
-
-.hit {
-  background-color: #f8ff97b3;
+  background-color: #2f6690;
 }
 
 .lock {
