@@ -48,7 +48,7 @@ function playRound(row, col) {
   // only if player misses, does the computer get allowed to play
   // if player hits, get out of function and wait for next input from player
   if (isPlayerHit === false) {
-    // set timeout to simulate computer is thinking
+    // set timeout to simulate that computer is thinking
     setTimeout(() => {
       let isComputerHit = playComputerChoice();
       renderPlayerBoard(player.gb);
@@ -57,8 +57,12 @@ function playRound(row, col) {
         return 2;
         // computer wins
       }
+      // putting set timeout here for the next consecutive moves, it works..somehow?
       setTimeout(() => {
         while (isComputerHit) {
+          // dont give set timeout after while because isComputerHit will always be true forever
+          // so call stack will never be empty as its filled with while(isComputerHit) condition
+          // so the callback inside setTimeout() code in callback queue can't be executed
           isComputerHit = playComputerChoice();
           renderPlayerBoard(player.gb);
           if (player.gb.isAllSunk()) {
