@@ -1,11 +1,127 @@
 import Gameboard from "./gameboard.js";
 import Ship from "./ship.js";
-import { Player, Computer } from "./player.js";
+import Player from "./player.js";
 
-function playGame() {
-  const playerTurn = true;
-  const player = new Player();
-  const computer = new Computer();
+const player = new Player("player");
+const computer = new Player("computer");
+
+player.gb.placeShip(0, 7, 3, false);
+player.gb.placeShip(1, 1, 2, false);
+player.gb.placeShip(2, 6, 1, true);
+player.gb.placeShip(3, 4, 2, true);
+player.gb.placeShip(3, 9, 3, true);
+player.gb.placeShip(4, 1, 1, true);
+player.gb.placeShip(7, 2, 4, false);
+player.gb.placeShip(7, 7, 1, false);
+player.gb.placeShip(9, 3, 1, false);
+player.gb.placeShip(9, 7, 2, false);
+
+computer.gb.placeShip(0, 7, 2, false);
+computer.gb.placeShip(0, 5, 2, true);
+computer.gb.placeShip(1, 0, 1, true);
+computer.gb.placeShip(3, 6, 1, true);
+computer.gb.placeShip(4, 1, 3, true);
+computer.gb.placeShip(4, 3, 3, true);
+computer.gb.placeShip(5, 8, 2, true);
+computer.gb.placeShip(6, 6, 4, true);
+computer.gb.placeShip(8, 9, 1, true);
+
+function playComputerChoice() {
+  let row = Math.floor(Math.random() * 10);
+  let col = Math.floor(Math.random() * 10);
+
+  while (player.gb.board[row][col] === 2 || player.gb.board[row][col] === 3) {
+    row = Math.floor(Math.random() * 10);
+    col = Math.floor(Math.random() * 10);
+  }
+  player.gb.receiveAttack(row, col);
 }
 
-function gameOver() {}
+function playRound(row, col) {
+  computer.gb.receiveAttack(row, col);
+  renderComputerBoard(computer.gb);
+  if (computer.gb.isAllSunk()) {
+    // player wins
+    alert("Player wins!");
+    return;
+  }
+  playComputerChoice();
+  renderPlayerBoard(player.gb);
+  if (player.gb.isAllSunk()) {
+    alert("Computer wins!");
+    return;
+    // computer wins
+  }
+}
+
+function renderPlayerBoard(gb) {
+  const board = document.createElement("table");
+  board.classList.add("player-board");
+  for (let i = 0; i < 10; i++) {
+    const row = document.createElement("tr");
+    row.classList.add(`row${i}`);
+    for (let j = 0; j < 10; j++) {
+      const cell = document.createElement("td");
+      cell.classList.add("cell");
+      if (gb.board[i][j] === 0) {
+        // empty cell
+        cell.classList.add("empty");
+      } else if (gb.board[i][j] === 1) {
+        // cell with ship is shown here
+        cell.textContent = "S";
+        cell.classList.add("ship");
+      } else if (gb.board[i][j] === 2) {
+        // cell with ship is hit
+        cell.classList.add("hit");
+      } else {
+        // cell with ship is missed
+        cell.classList.add("miss");
+      }
+      row.appendChild(cell);
+    }
+    board.appendChild(row);
+  }
+  const boardPlaceholder = document.querySelector(
+    ".computer-board-placeholder",
+  );
+  boardPlaceholder.replaceChildren();
+  boardPlaceholder.appendChild(board);
+}
+
+function renderComputerBoard(gb) {
+  const board = document.createElement("table");
+  board.classList.add("computer-board");
+  for (let i = 0; i < 10; i++) {
+    const row = document.createElement("tr");
+    row.classList.add(`row${i}`);
+    for (let j = 0; j < 10; j++) {
+      const cell = document.createElement("td");
+      cell.classList.add("cell", `col${j}`);
+      if (gb.board[i][j] === 0 || gb.board[i][j] === 1) {
+        // empty cell
+        cell.classList.add("empty");
+      } else if (gb.board[i][j] === 2) {
+        // cell with ship is hit
+        cell.classList.add("hit");
+      } else {
+        // cell with ship is missed
+        cell.classList.add("miss");
+      }
+      cell.addEventListener("click", function (e) {
+        const row = this.parentElement.classList[0].at(-1);
+        const col = this.classList[1].at(-1);
+        playRound(row, col);
+      });
+      row.appendChild(cell);
+    }
+    board.appendChild(row);
+  }
+  const boardPlaceholder = document.querySelector(".player-board-placeholder");
+  boardPlaceholder.replaceChildren();
+  boardPlaceholder.appendChild(board);
+}
+
+export default function init() {
+  renderComputerBoard(computer.gb);
+  renderPlayerBoard(player.gb);
+}

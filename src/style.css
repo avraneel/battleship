@@ -37,7 +37,7 @@ table {
   border: 1px solid #9d98fc;
 }
 
-.cell:hover {
+.computer-board .cell:hover {
   border: 1px solid #016c18;
   background-color: #72e48a;
 }

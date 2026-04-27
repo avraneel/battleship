@@ -74,8 +74,10 @@ export default class Gameboard {
       } catch (error) {
         console.log(error);
       }
+      return true;
     } else {
       this.board[row][col] = cell.miss;
+      return false;
     }
   }
 
