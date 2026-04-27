@@ -43,15 +43,16 @@ function playRound(row, col) {
   if (computer.gb.isAllSunk()) {
     // player wins
     alert("Player wins!");
-    return;
+    return 1;
   }
   playComputerChoice();
   renderPlayerBoard(player.gb);
   if (player.gb.isAllSunk()) {
     alert("Computer wins!");
-    return;
+    return 2;
     // computer wins
   }
+  return 0;
 }
 
 function renderPlayerBoard(gb) {
@@ -110,7 +111,8 @@ function renderComputerBoard(gb) {
       cell.addEventListener("click", function (e) {
         const row = this.parentElement.classList[0].at(-1);
         const col = this.classList[1].at(-1);
-        playRound(row, col);
+        const roundVal = playRound(row, col);
+        if (roundVal) lockBoards();
       });
       row.appendChild(cell);
     }
@@ -119,6 +121,13 @@ function renderComputerBoard(gb) {
   const boardPlaceholder = document.querySelector(".player-board-placeholder");
   boardPlaceholder.replaceChildren();
   boardPlaceholder.appendChild(board);
+}
+
+function lockBoards() {
+  const pb = document.querySelector(".player-board");
+  const cb = document.querySelector(".computer-board");
+  pb.classList.add("lock");
+  cb.classList.add("lock");
 }
 
 export default function init() {
