@@ -5,26 +5,9 @@ import Player from "./player.js";
 const player = new Player("player");
 const computer = new Player("computer");
 
-player.gb.placeShip(0, 7, 3, false);
-player.gb.placeShip(1, 1, 2, false);
-player.gb.placeShip(2, 6, 1, true);
-player.gb.placeShip(3, 4, 2, true);
-player.gb.placeShip(3, 9, 3, true);
-player.gb.placeShip(4, 1, 1, true);
-player.gb.placeShip(7, 2, 4, false);
-player.gb.placeShip(7, 7, 1, false);
-player.gb.placeShip(9, 3, 1, false);
-player.gb.placeShip(9, 7, 2, false);
+randomize(player.gb);
 
-computer.gb.placeShip(0, 7, 2, false);
-computer.gb.placeShip(0, 5, 2, true);
-computer.gb.placeShip(1, 0, 1, true);
-computer.gb.placeShip(3, 6, 1, true);
-computer.gb.placeShip(4, 1, 3, true);
-computer.gb.placeShip(4, 3, 3, true);
-computer.gb.placeShip(5, 8, 2, true);
-computer.gb.placeShip(6, 6, 4, true);
-computer.gb.placeShip(8, 9, 1, true);
+randomize(computer.gb);
 
 function playComputerChoice() {
   let row = Math.floor(Math.random() * 10);
@@ -156,7 +139,68 @@ function lockBoards() {
   cb.classList.add("lock");
 }
 
+function randomize(gb) {
+  /**
+   * 1 ship of length 4
+   * 2 ships of length 3
+   * 3 ships of length 2
+   * 4 ships of length 1
+   */
+
+  let done = false;
+  while (!done) {
+    try {
+      const row = Math.floor(Math.random() * 10);
+      const col = Math.floor(Math.random() * 10);
+      const vertical = Math.floor(Math.random() * 2) ? true : false;
+      gb.placeShip(row, col, 4, vertical);
+      done = true;
+    } catch (error) {}
+  }
+  // length 4 ship done, doing length 3 ship
+  for (let i = 1; i <= 2; i++) {
+    done = false;
+    while (!done) {
+      const row = Math.floor(Math.random() * 10);
+      const col = Math.floor(Math.random() * 10);
+      const vertical = Math.floor(Math.random() * 2) ? true : false;
+      try {
+        gb.placeShip(row, col, 3, vertical);
+        done = true;
+      } catch (error) {}
+    }
+  }
+  // length 3 ship done, doing length 2 ship
+  for (let i = 1; i <= 3; i++) {
+    done = false;
+    while (!done) {
+      const row = Math.floor(Math.random() * 10);
+      const col = Math.floor(Math.random() * 10);
+      const vertical = Math.floor(Math.random() * 2) ? true : false;
+      try {
+        gb.placeShip(row, col, 2, vertical);
+        done = true;
+      } catch (error) {}
+    }
+  }
+  // length 2 ship done, doing length 1 ship
+  for (let i = 1; i <= 4; i++) {
+    done = false;
+    while (!done) {
+      const row = Math.floor(Math.random() * 10);
+      const col = Math.floor(Math.random() * 10);
+      const vertical = Math.floor(Math.random() * 2) ? true : false;
+      try {
+        gb.placeShip(row, col, 1, vertical);
+        done = true;
+      } catch (error) {}
+    }
+  }
+}
+
 export default function init() {
   renderComputerBoard(computer.gb);
   renderPlayerBoard(player.gb);
 }
+
+randomize(computer.gb);

@@ -22,33 +22,47 @@ export default class Gameboard {
     }
   }
 
+  isValidShip(row, col, length, vertical) {
+    if ((vertical && row + length > 10) || (!vertical && col + length > 10)) {
+      return false;
+    } else return true;
+  }
+
   placeShip(row, col, length, vertical) {
     const ship = new Ship(length);
-    const item = { obj: ship, coords: [[row, col]] };
-    if (this.board[row][col] !== cell.empty) {
-      throw new Error("Starting position is not empty");
-    }
-    this.board[row][col] = cell.ship;
-    if ((vertical && row + length > 10) || (!vertical && col + length > 10)) {
+    const item = { obj: ship, coords: [] };
+    if (!this.isValidShip(row, col, length, vertical)) {
       throw new Error("Ship length is out of bounds");
     }
+    let rowBackup = row;
+    let colBackup = col;
     if (vertical) {
-      for (let i = 1; i < length; i++) {
-        row++;
+      for (let i = 0; i < length; i++) {
+        // first check if all coords to be inserted don't already have a ship
         if (this.board[row][col] !== cell.empty) {
           throw new Error("Overlapping with another ship");
         }
-        this.board[row][col] = cell.ship;
-        item.coords.push([row, col]);
+        row++;
+      }
+      // at this point, safe to insert?
+      for (let i = 0; i < length; i++) {
+        this.board[rowBackup][colBackup] = cell.ship;
+        item.coords.push([rowBackup, colBackup]);
+        rowBackup++;
       }
     } else {
-      for (let i = 1; i < length; i++) {
-        col++;
+      for (let i = 0; i < length; i++) {
+        // first check if all coords to be inserted don't already have a ship
         if (this.board[row][col] !== cell.empty) {
           throw new Error("Overlapping with another ship");
         }
-        this.board[row][col] = cell.ship;
-        item.coords.push([row, col]);
+        col++;
+      }
+      // at this point, safe to insert?
+      for (let i = 0; i < length; i++) {
+        this.board[rowBackup][colBackup] = cell.ship;
+        item.coords.push([rowBackup, colBackup]);
+        colBackup++;
       }
     }
     this.ships.push(item);
