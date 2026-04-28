@@ -202,5 +202,3 @@ export default function init() {
   renderComputerBoard(computer.gb);
   renderPlayerBoard(player.gb);
 }
-
-randomize(computer.gb);
