@@ -140,6 +140,7 @@ function lockBoards() {
 }
 
 function randomize(gb) {
+  gb.resetBoard();
   /**
    * 1 ship of length 4
    * 2 ships of length 3
@@ -197,6 +198,12 @@ function randomize(gb) {
     }
   }
 }
+
+const random = document.querySelector(".random");
+random.addEventListener("click", () => {
+  randomize(player.gb);
+  renderPlayerBoard(player.gb);
+});
 
 export default function init() {
   renderComputerBoard(computer.gb);
